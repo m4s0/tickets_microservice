@@ -5,7 +5,7 @@ const {
     build,
     testWithLogin,
     createUser
-} = require('./helper')
+} = require('../helper')
 
 test('cannot create a ticket without a login', async (t) => {
     const app = build(t)

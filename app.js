@@ -1,12 +1,28 @@
-const Tickets = require('./tickets')
-const MongoDB = require('fastify-mongodb')
-const JWT = require('fastify-jwt')
+'use strict'
 
-module.exports = async function (app, opts) {
-    app.register(MongoDB, {
-        useNewUrlParser: true,
-        url: process.env.MONGODB_URL
+const path = require('path')
+const AutoLoad = require('fastify-autoload')
+
+module.exports = function (fastify, opts, next) {
+    // Place here your custom code!
+
+    // Do not touch the following lines
+
+    // This loads all plugins defined in plugins
+    // those should be support plugins that are reused
+    // through your application
+    fastify.register(AutoLoad, {
+        dir: path.join(__dirname, 'plugins'),
+        options: Object.assign({}, opts)
     })
-    app.register(JWT, {secret: process.env.JWT_SECRET})
-    app.register(Tickets)
+
+    // This loads all plugins defined in services
+    // define your routes in one of these
+    fastify.register(AutoLoad, {
+        dir: path.join(__dirname, 'services'),
+        options: Object.assign({}, opts)
+    })
+
+    // Make sure to call next when done
+    next()
 }

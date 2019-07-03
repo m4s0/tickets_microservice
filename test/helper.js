@@ -5,10 +5,7 @@
 
 const Fastify = require('fastify')
 const fp = require('fastify-plugin')
-const Tickets = require('../tickets')
-const MongoDB = require('fastify-mongodb')
-const jwt = require('fastify-jwt')
-
+const App = require('../app')
 
 const clean = require('mongo-clean')
 const {MongoClient} = require('mongodb')
@@ -40,7 +37,10 @@ tearDown(async function () {
 function config() {
     return {
         auth: {
-            secret: 'averyverylongsecret'
+            secret: 'this-is-a-long-secret'
+        },
+        tickets: {
+            url: 'http://localhost:3001'
         },
         mongodb: {
             client,
@@ -53,14 +53,10 @@ function config() {
 function build(t) {
     const app = Fastify()
 
-    const _conf = config()
-    app.register(MongoDB, _conf.mongodb)
-    app.register(jwt, {secret: 'random123'})
-
     // fastify-plugin ensures that all decorators
     // are exposed for testing purposes, this is
     // different from the production setup
-    app.register(fp(Tickets), _conf)
+    app.register(fp(App), config())
 
     // tear down our app after we are done
     t.tearDown(app.close.bind(app))
