@@ -1,0 +1,32 @@
+{
+  "name": "@m4s0/tickets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tickets.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "mongo": "docker run -p 27017:27017 mongo:4.1.13",
+    "start": "fastify start -p 3001 -l info app.js",
+    "test": "tap test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m4s0/tickets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@matteo.collina/fastify-auth-mongo-jwt": "^0.2.0",
+    "fastify": "^2.0.0",
+    "fastify-autoload": "^0.6.0",
+    "fastify-cli": "^1.0.0",
+    "fastify-mongodb": "^1.0.1",
+    "fastify-plugin": "^1.5.0"
+  },
+  "devDependencies": {
+    "mongo-clean": "^2.0.0",
+    "tap": "^14.4.0"
+  }
+}
